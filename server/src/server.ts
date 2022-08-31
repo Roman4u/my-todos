@@ -5,12 +5,13 @@ import mongoose from "mongoose";
 import { config } from "./config/config";
 
 const router = express();
+const URL = config.mongo.url;
 
 mongoose
-    .connect(config.mongo.url)
-    .then(() => {
-        console.log("connected");
-    })
-    .catch((error) => {
-        console.log(error);
-    });
+  .connect(URL, { retryWrites: true, w: "majority" })
+  .then(() => {
+    console.log("connected");
+  })
+  .catch((error) => {
+    console.log(error);
+  });
