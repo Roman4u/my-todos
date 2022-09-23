@@ -6,10 +6,12 @@ import cors from "cors";
 import { config } from "./config/config";
 
 const router: Express = express();
+router.use(cors());
+
+
 const URL = config.mongo.url;
 const PORT = config.server.port;
 
-router.use(cors());
 
 mongoose
   .connect(URL)
