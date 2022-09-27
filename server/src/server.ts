@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 
 import { config } from "./config/config";
+import todoRoutes from "./routes/index";
+
 
 const router: Express = express();
 router.use(cors());
@@ -26,6 +28,9 @@ mongoose
   const StartServer = () => {
     router.use(express.urlencoded({ extended: true }));
     router.use(express.json());
+
+    /** Routes */
+    router.use("/todos", todoRoutes)
 
      /** Router Health Check */
      router.get("/", (req: Request, res: Response, next: NextFunction) => {
