@@ -22,7 +22,7 @@ mongoose
     StartServer();
   })
   .catch((error) => {
-    console.log(error);
+    console.log("ERROR:", error);
   });
 
   const StartServer = () => {
