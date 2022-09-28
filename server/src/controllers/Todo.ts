@@ -55,7 +55,6 @@ const updateTodo = async (
     const updateTodo: ITodo | null = await Todo.findByIdAndUpdate(id, status);
     const allTodos: ITodo[] = await Todo.find();
 
-
     res.status(201).json({
       message: "Todo updated",
       todo: updateTodo,
@@ -66,6 +65,24 @@ const updateTodo = async (
   }
 };
 
-const deleteTodo = (req: Request, res: Response, next: NextFunction) => {};
+const deleteTodo = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const id = req.params.id;
+    const deleteTodo: ITodo | null = await Todo.findByIdAndDelete(id);
+
+    const allTodos: ITodo[] = await Todo.find();
+    res.status(200).json({
+      message: "Todo deleted",
+      todo: deleteTodo,
+      todos: allTodos,
+    });
+  } catch (error) {
+    console.error("error:", error);
+  }
+};
 
 export { createTodo, getAllTodos, updateTodo, deleteTodo };
