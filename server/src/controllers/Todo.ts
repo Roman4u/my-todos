@@ -49,7 +49,7 @@ const updateTodo = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { status } = req.body;
+    const status = req.body;
     const { id } = req.params;
 
     const updateTodo: ITodo | null = await Todo.findByIdAndUpdate(id, status);
