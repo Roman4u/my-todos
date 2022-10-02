@@ -1,25 +1,54 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { addTodo, getTodos } from "./API";
+import AddTodo from "./components/AddTodo";
 
 function App() {
+
+  const [todos, setTodos] = useState<ITodo[]>([]);
+
+  const fetchTodos = async (): Promise<any> => {
+    try{
+      const data = await getTodos();
+      const todoList: ITodo[] = data.todos; 
+      setTodos(todoList);
+    }catch(error){
+      console.error(error);
+    }
+  } 
+
+  const handleSaveTodo = async (
+    e: React.FormEvent,
+    formData: ITodo
+  ): Promise<any> => {
+    e.preventDefault();
+
+    try{
+      const data = await addTodo(formData);
+      console.log("data:", data);
+      console.log("data.data:", data.data);
+    }catch(error){
+      console.error(error);
+    }
+  
+    // addTodo(formData)
+    //   .then((data) => {
+    //     console.log("data:", data);
+    //     console.log("data.data:", data.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
+  };
+
+  useEffect(() => {
+    fetchTodos();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className="App">
+      <h1>My List of Todos</h1>
+      <AddTodo saveTodo={handleSaveTodo} />
+    </main>
   );
 }
 
