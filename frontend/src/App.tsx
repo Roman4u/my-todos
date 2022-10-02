@@ -30,14 +30,6 @@ function App() {
       console.error(error);
     }
   
-    // addTodo(formData)
-    //   .then((data) => {
-    //     console.log("data:", data);
-    //     console.log("data.data:", data.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
   };
 
   useEffect(() => {
