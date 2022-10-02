@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 type Props = {
-  saveTodo: (e: React.FormEvent, formData: ITodo | unknown) => void;
+  saveTodo: (e: React.FormEvent, formData: ITodo | any) => void;
 };
 
 const AddTodo = ({ saveTodo }: Props) => {
