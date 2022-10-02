@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from "axios";
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
 export const getTodos =
-  async (): Promise<AxiosResponse<ApiDataType> | void> => {
+  async (): Promise<AxiosResponse<ApiDataType> | any> => {
     try {
       const todos: AxiosResponse<ApiDataType> = await axios.get(
         `${baseUrl}/todos/get`
@@ -16,7 +16,7 @@ export const getTodos =
 
 export const addTodo = async (
   formData: ITodo
-): Promise<AxiosResponse<ApiDataType> | void> => {
+): Promise<AxiosResponse<ApiDataType> | any> => {
   try {
     const todo: Omit<ITodo, "_id"> = {
       name: formData.name,
@@ -38,22 +38,28 @@ export const updateTodo = async (
 ): Promise<AxiosResponse | void> => {
   try {
     const todoUpdate: Pick<ITodo, "status"> = {
-        status: true
+      status: true,
     };
 
-    const updatedTodo: AxiosResponse = await axios.patch(`${baseUrl}/todos/update/${todo._id}`,
-    todoUpdate);
-    return updatedTodo; 
+    const updatedTodo: AxiosResponse = await axios.patch(
+      `${baseUrl}/todos/update/${todo._id}`,
+      todoUpdate
+    );
+    return updatedTodo;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const deleteTodo = async ( _id: string ): Promise<AxiosResponse | void> => {
-    try{
-        const deletedTodo: AxiosResponse = await axios.delete(`${baseUrl}/todos/delete/${_id}`);
-        return deletedTodo;
-    }catch(error){
-        console.error(error);
-    }
+export const deleteTodo = async (
+  _id: string
+): Promise<AxiosResponse | void> => {
+  try {
+    const deletedTodo: AxiosResponse = await axios.delete(
+      `${baseUrl}/todos/delete/${_id}`
+    );
+    return deletedTodo;
+  } catch (error) {
+    console.error(error);
+  }
 };
