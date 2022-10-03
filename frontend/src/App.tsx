@@ -60,10 +60,6 @@ function App() {
   };
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   await fetchTodos();
-    // };
-    // fetchData();
     fetchTodos();
   }, []);
 

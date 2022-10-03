@@ -28,7 +28,12 @@ const AddTodo = ({ saveTodo }: Props) => {
         </div>
       </div>
 
-      <button disabled={formData === undefined ? true : false}>
+      <button
+        disabled={formData === undefined ? true : false}
+        onClick={() => {
+          window.location.reload();
+        }}
+      >
         Add A Todo
       </button>
     </form>
