@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import TodoItem from "./components/TodoItem";
-import { addTodo, getTodos, updateTodo } from "./API";
+import { addTodo, deleteTodo, getTodos, updateTodo } from "./API";
 import AddTodo from "./components/AddTodo";
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
   const handleSaveTodo = async (
     e: React.FormEvent,
     formData: ITodo
-  ): Promise<any> => {
+  ): Promise<void> => {
     e.preventDefault();
 
     try {
@@ -36,7 +36,7 @@ function App() {
     }
   };
 
-  const handleUpdateTodo = async (todo: ITodo): Promise<any> => {
+  const handleUpdateTodo = async (todo: ITodo): Promise<void> => {
     try {
       const data = await updateTodo(todo);
       if (data.status !== 201) {
@@ -48,8 +48,13 @@ function App() {
     }
   };
 
-  const handleDeleteTodo = (_id: string): void => {
+  const handleDeleteTodo = async (_id: string): Promise<void> => {
     try {
+      const data = await deleteTodo(_id);
+      if(data.status !== 200){
+        throw new Error("Error! Todo not deleted");
+      }
+      setTodos(data.todos);
     } catch (error) {
       console.error(error);
     }
@@ -60,17 +65,20 @@ function App() {
   }, []);
 
   return (
+    
     <main className="App">
-      <h1>My List of Todos</h1>
-      <AddTodo saveTodo={handleSaveTodo} />
-      {todos.map((todo: ITodo) => {
-        <TodoItem
-          key={todo._id}
-          updateTodo={handleUpdateTodo}
-          deleteTodo={handleDeleteTodo}
-          todo={todo}
-        />;
-      })}
+      <>
+        <h1>My List of Todos</h1>
+        <AddTodo saveTodo={handleSaveTodo} />
+        {todos.map((todo: ITodo) => {
+          <TodoItem
+            key={todo._id}
+            updateTodo={handleUpdateTodo}
+            deleteTodo={handleDeleteTodo}
+            todo={todo}
+          />;
+          })}
+      </>
     </main>
   );
 }
