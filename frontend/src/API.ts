@@ -53,7 +53,7 @@ export const updateTodo = async (
 
 export const deleteTodo = async (
   _id: string
-): Promise<AxiosResponse | void> => {
+): Promise<AxiosResponse | any> => {
   try {
     const deletedTodo: AxiosResponse = await axios.delete(
       `${baseUrl}/todos/delete/${_id}`
