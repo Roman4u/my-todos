@@ -19,7 +19,6 @@ const TodoItem = ({ todo, updateTodo, deleteTodo }: Props) => {
         <button
           onClick={() => {
             updateTodo(todo);
-            window.location.reload();
           }}
           className={todo.status ? `hide-button` : "Card--button__done"}
         >
@@ -29,7 +28,6 @@ const TodoItem = ({ todo, updateTodo, deleteTodo }: Props) => {
         <button
           onClick={() => {
             deleteTodo(todo._id);
-            window.location.reload();
           }}
           className="Card--button__delete"
         >

@@ -61,7 +61,7 @@ function App() {
 
   useEffect(() => {
     fetchTodos();
-  }, []);
+  }, [todos]);
 
   return (
     <main className="App">
