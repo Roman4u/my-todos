@@ -35,7 +35,7 @@ export const addTodo = async (
 };
 export const updateTodo = async (
   todo: ITodo
-): Promise<AxiosResponse | void> => {
+): Promise<AxiosResponse | any> => {
   try {
     const todoUpdate: Pick<ITodo, "status"> = {
       status: true,
