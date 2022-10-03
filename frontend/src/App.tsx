@@ -10,7 +10,7 @@ function App() {
   const fetchTodos = async (): Promise<any> => {
     try {
       const data = await getTodos();
-      const todoList: ITodo[] = data.todos;
+      const todoList: ITodo[] = data.data.allTodos;
       setTodos(todoList);
     } catch (error) {
       console.error(error);
@@ -22,10 +22,9 @@ function App() {
   const handleSaveTodo = async (
     e: React.FormEvent,
     formData: ITodo
-  ): Promise<void> => {
-    e.preventDefault();
-
+  ): Promise<any> => {
     try {
+      e.preventDefault();
       const data = await addTodo(formData);
       if (data.status !== 201) {
         throw new Error("Error! No Todo Saved");
@@ -36,7 +35,7 @@ function App() {
     }
   };
 
-  const handleUpdateTodo = async (todo: ITodo): Promise<void> => {
+  const handleUpdateTodo = async (todo: ITodo): Promise<any> => {
     try {
       const data = await updateTodo(todo);
       if (data.status !== 201) {
@@ -48,10 +47,10 @@ function App() {
     }
   };
 
-  const handleDeleteTodo = async (_id: string): Promise<void> => {
+  const handleDeleteTodo = async (_id: string): Promise<any> => {
     try {
       const data = await deleteTodo(_id);
-      if(data.status !== 200){
+      if (data.status !== 200) {
         throw new Error("Error! Todo not deleted");
       }
       setTodos(data.todos);
@@ -61,23 +60,28 @@ function App() {
   };
 
   useEffect(() => {
+    // const fetchData = async () => {
+    //   await fetchTodos();
+    // };
+    // fetchData();
     fetchTodos();
   }, []);
 
   return (
-    
     <main className="App">
       <>
         <h1>My List of Todos</h1>
         <AddTodo saveTodo={handleSaveTodo} />
-        {todos.map((todo: ITodo) => {
-          <TodoItem
-            key={todo._id}
-            updateTodo={handleUpdateTodo}
-            deleteTodo={handleDeleteTodo}
-            todo={todo}
-          />;
-          })}
+        {todos?.map((todo: ITodo) => {
+          return (
+            <TodoItem
+              key={todo._id}
+              updateTodo={handleUpdateTodo}
+              deleteTodo={handleDeleteTodo}
+              todo={todo}
+            />
+          );
+        })}
       </>
     </main>
   );
